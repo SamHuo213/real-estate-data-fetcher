@@ -1,5 +1,5 @@
 import { gReceiver_ } from './util-service';
-import { querySQL } from '../resource';
+import { querySQL } from '../resource'; // Not in Source control
 import { DateService } from './date-service';
 import { RegionService } from './region-service';
 
@@ -74,12 +74,6 @@ export class FetchDataService {
 			.concat([
 				`regionName IN (${regions})`
 			]);
-
-		// return [
-		// 	`entryDate >= ${startDate}`,
-		// 	`entryDate <= ${endDate}`,
-		// 	`regionName IN (${regions})`
-		// ];
 	}
 
 	delay(milliseconds) {
