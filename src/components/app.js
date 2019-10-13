@@ -6,7 +6,7 @@ export class App extends React.Component {
 		return (
 			<div>
 				<div>
-					Hello World!
+					Real Estate Data Fetcher!
 				</div>
 				<FetchDataButton></FetchDataButton>
 			</div>
