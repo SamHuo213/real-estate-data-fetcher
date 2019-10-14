@@ -20,7 +20,8 @@ export class FetchDataService {
 			);
 			console.log(salesResponse);
 
-			await this.delay(10000);
+			// Too not overload the server not in my control
+			await this.delay(1000);
 
 			const inventoryResponse = await this.fetchData(
 				internalStartDate,
@@ -30,7 +31,8 @@ export class FetchDataService {
 			);
 			console.log(inventoryResponse);
 
-			await this.delay(10000);
+			// Too not overload the server not in my control
+			await this.delay(1000);
 		}
 
 		// TODO - Better indication
