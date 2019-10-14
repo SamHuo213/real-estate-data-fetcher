@@ -6,6 +6,7 @@ import { RegionService } from './region-service';
 export class FetchDataService {
 	pageSize = 10000;
 	orderBy = ' ORDER BY entryDate DESC';
+	delayTime = 1000;
 
 	async fetchAllData(startDate = null, endDate = null) {
 		const internalStartDate = DateService.getStartDate(startDate);
@@ -22,7 +23,7 @@ export class FetchDataService {
 			rows = rows.concat(salesResponse.rows);
 
 			// Too not overload the server not in my control
-			await this.delay(1000);
+			await this.delay(delayTime);
 
 			const inventoryResponse = await this.fetchData(
 				internalStartDate,
@@ -33,7 +34,7 @@ export class FetchDataService {
 			rows = rows.concat(inventoryResponse.rows);
 
 			// Too not overload the server not in my control
-			await this.delay(1000);
+			await this.delay(delayTime);
 		}
 
 		return rows;
