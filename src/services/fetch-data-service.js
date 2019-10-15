@@ -23,7 +23,7 @@ export class FetchDataService {
 			rows = rows.concat(salesResponse.rows);
 
 			// Too not overload the server not in my control
-			await this.delay(delayTime);
+			await this.delay(this.delayTime);
 
 			const inventoryResponse = await this.fetchData(
 				internalStartDate,
@@ -34,7 +34,7 @@ export class FetchDataService {
 			rows = rows.concat(inventoryResponse.rows);
 
 			// Too not overload the server not in my control
-			await this.delay(delayTime);
+			await this.delay(this.delayTime);
 		}
 
 		return rows;
