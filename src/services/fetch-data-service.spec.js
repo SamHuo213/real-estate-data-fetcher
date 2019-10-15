@@ -1,6 +1,10 @@
 import { FetchDataService } from './fetch-data-service';
 import { RegionService } from './region-service';
 
+
+// TODO
+// Check the API calls is as expected
+// Check response handling is correct
 describe('FetchDataService', () => {
 	let fetchDataService;
 	
@@ -25,7 +29,6 @@ describe('FetchDataService', () => {
 				rows: []
 			}));
 			fetchDataService.delayTime = 1;
-			console.log(fetchDataService);
 			
 			const response = await fetchDataService.fetchAllData(); 
 		

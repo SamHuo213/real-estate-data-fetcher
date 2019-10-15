@@ -1,5 +1,7 @@
 import React from 'react';
 import { FetchDataService } from '../services/fetch-data-service';
+import { DataConverterService } from '../services/data-converter-service';
+import { FileSaverService } from '../services/file-saver-service';
 
 // TODO
 //- Export functionality
@@ -14,7 +16,8 @@ export class FetchDataButton extends React.Component {
 	
 	async onFetchData() {
 		const response = await this.fetchDataService.fetchAllData();
-		console.log(response);
+		const convertedResponse = DataConverterService.convertToTsv(response);
+		FileSaverService.saveData(convertedResponse);
 	}
 	
 	render() {
