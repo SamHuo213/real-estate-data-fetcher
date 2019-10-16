@@ -42,6 +42,9 @@ export class RegionService {
 		mapld: [
 			'Ladner', 'Tsawwassen'
 		],
+		gulfislands: [
+			"Islands-Van. & Gulf", "Gulf Islands"
+		],
 		mapfvnorthsurrey: [
 			'North Surrey'
 		],
