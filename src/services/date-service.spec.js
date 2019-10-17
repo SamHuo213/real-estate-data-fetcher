@@ -2,9 +2,43 @@ import { DateService } from './date-service';
 
 describe('DateService', () => {
 	describe('getStartDate', () => {
-		it('should return YYYY-mm-dd where year is one year ago', () => {
-			const dateNow = new Date(Date.now());
-			const expectedDateString = `'${dateNow.getFullYear()-1}-${dateNow.getMonth()+1}-${dateNow.getDate()}'`;
+		it('should return YYYY-mm-dd where date is 3 months back', () => {
+			const dateNow = new Date('2019-05-25 14:00:00 GMT-02:00');
+			Date.now = jest.fn(() => dateNow);
+			const expectedDateString = `'${dateNow.getFullYear()}-${dateNow.getMonth()-3+1}-${dateNow.getDate()}'`;
+			
+			const dateString = DateService.getStartDate();
+
+			expect(dateString)
+				.toBe(expectedDateString);
+		});
+
+		it('should return 2018-12-25', () => {
+			const dateNow = new Date('2019-03-25 14:00:00 GMT-02:00');
+			Date.now = jest.fn(() => dateNow);
+			const expectedDateString = `'2018-12-25'`;
+			
+			const dateString = DateService.getStartDate();
+
+			expect(dateString)
+				.toBe(expectedDateString);
+		});
+
+		it('should return 2018-11-25', () => {
+			const dateNow = new Date('2019-02-25 14:00:00 GMT-02:00');
+			Date.now = jest.fn(() => dateNow);
+			const expectedDateString = `'2018-11-25'`;
+			
+			const dateString = DateService.getStartDate();
+
+			expect(dateString)
+				.toBe(expectedDateString);
+		});
+
+		it('should return 2018-10-25', () => {
+			const dateNow = new Date('2019-01-25 14:00:00 GMT-02:00');
+			Date.now = jest.fn(() => dateNow);
+			const expectedDateString = `'2018-10-25'`;
 			
 			const dateString = DateService.getStartDate();
 

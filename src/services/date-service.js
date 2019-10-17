@@ -5,7 +5,14 @@ export class DateService {
 		}
 
 		let internalStartDate = new Date(Date.now());
-		internalStartDate.setFullYear(internalStartDate.getFullYear() - 1);
+
+		let desiredMonth = internalStartDate.getMonth() - 3;
+		if (desiredMonth < 0) {
+			desiredMonth = 12 + desiredMonth;
+			internalStartDate.setFullYear(internalStartDate.getFullYear() - 1);
+		}
+
+		internalStartDate.setMonth(desiredMonth);
 
 		return this.getStringFormatedDate(internalStartDate);
 	}
