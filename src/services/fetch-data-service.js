@@ -6,7 +6,7 @@ import { RegionService } from './region-service';
 export class FetchDataService {
 	pageSize = 10000;
 	orderBy = ' ORDER BY entryDate DESC';
-	delayTime = 1000;
+	delayTime = 5000;
 
 	async fetchAllData(startDate = null, endDate = null) {
 		const internalStartDate = DateService.getStartDate(startDate);
