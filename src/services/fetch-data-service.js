@@ -4,7 +4,7 @@ import { DateService } from './date-service';
 import { RegionService } from './region-service';
 
 export class FetchDataService {
-	pageSize = 10000;
+	pageSize = 5000;
 	orderBy = ' ORDER BY entryDate DESC';
 	delayTime = 5000;
 
