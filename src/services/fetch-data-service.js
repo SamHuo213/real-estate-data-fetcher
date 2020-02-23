@@ -13,7 +13,7 @@ export class FetchDataService {
 		const internalEndDate = DateService.getEndDate(endDate);
 		let rows = [];
 
-		for(const value of Object.values(RegionService.regionsMap)) {
+		for (const value of Object.values(RegionService.regionsMap)) {
 			const salesResponse = await this.fetchData(
 				internalStartDate,
 				internalEndDate,
@@ -41,23 +41,23 @@ export class FetchDataService {
 	}
 
 	async fetchData(startDate, endDate, regions, soldFlag) {
-		let headers = {'Content-Type': 'application/x-www-form-urlencoded'};
+		let headers = { 'Content-Type': 'application/x-www-form-urlencoded' };
 		let httpResponse = await fetch(querySQL, {
 			method: 'POST',
 			headers: headers,
 			body: this.getParams(startDate, endDate, regions, soldFlag)
 		});
-		
+
 		return httpResponse.json();
 	}
 
 	getParams(startDate, endDate, regions, soldFlag) {
 		const args = this.getArgs(startDate, endDate, regions, soldFlag);
 
-		let searchQuery  = 'SELECT * FROM *** WHERE ' + args.join(' AND ') + this.orderBy;
+		let searchQuery = 'SELECT * FROM *** WHERE ' + args.join(' AND ') + this.orderBy;
 		searchQuery += ' LIMIT ' + this.pageSize + ' OFFSET ' + 0;
-	
-		let params  = 'sql=' + encodeURIComponent(searchQuery);
+
+		let params = 'sql=' + encodeURIComponent(searchQuery);
 		params += '&sold=' + (soldFlag ? '1' : '');
 		params += '&s=' + gReceiver_(searchQuery);
 
@@ -72,7 +72,7 @@ export class FetchDataService {
 				`entryDate <= ${endDate}`
 			]);
 		}
-		
+
 		return args
 			.concat([
 				`regionName IN (${regions})`

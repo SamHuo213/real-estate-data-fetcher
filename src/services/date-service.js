@@ -6,7 +6,7 @@ export class DateService {
 
 		let internalStartDate = new Date(Date.now());
 
-		let desiredMonth = internalStartDate.getMonth() - 3;
+		let desiredMonth = internalStartDate.getMonth() - 1;
 		if (desiredMonth < 0) {
 			desiredMonth = 12 + desiredMonth;
 			internalStartDate.setFullYear(internalStartDate.getFullYear() - 1);
