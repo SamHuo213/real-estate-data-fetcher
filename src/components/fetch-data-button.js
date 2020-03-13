@@ -6,20 +6,20 @@ import { FileSaverService } from '../services/file-saver-service';
 // TODO
 //- Export functionality
 //- Accept dates
-export class FetchDataButton extends React.Component {	
+export class FetchDataButton extends React.Component {
 	fetchDataService;
-	
+
 	constructor(props) {
 		super(props);
 		this.fetchDataService = new FetchDataService();
 	}
-	
+
 	async onFetchData() {
 		const response = await this.fetchDataService.fetchAllData();
 		const convertedResponse = DataConverterService.convertToTsv(response);
 		FileSaverService.saveData(convertedResponse);
 	}
-	
+
 	render() {
 		return (
 			<button onClick={this.onFetchData.bind(this)}>

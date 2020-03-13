@@ -7,7 +7,7 @@ import { RegionService } from './region-service';
 // Check response handling is correct
 describe('FetchDataService', () => {
 	let fetchDataService;
-	
+
 	beforeEach(() => {
 		fetch.resetMocks()
 		fetchDataService = new FetchDataService();
@@ -21,7 +21,7 @@ describe('FetchDataService', () => {
 			]
 		};
 	});
-	
+
 	describe('fetchAllData', () => {
 		it('should pass', async () => {
 			fetch.mockResponse(JSON.stringify({
@@ -29,9 +29,9 @@ describe('FetchDataService', () => {
 				rows: []
 			}));
 			fetchDataService.delayTime = 1;
-			
-			const response = await fetchDataService.fetchAllData(); 
-		
+
+			const response = await fetchDataService.fetchAllData();
+
 			expect(response)
 				.toBeDefined();
 		});
