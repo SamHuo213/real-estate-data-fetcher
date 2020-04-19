@@ -6,7 +6,7 @@ import { RegionService } from './region-service';
 export class FetchDataService {
 	pageSize = 5000;
 	orderBy = ' ORDER BY entryDate DESC';
-	delayTime = 5000;
+	delayTime = 1000;
 
 	async fetchAllData(startDate = null, endDate = null) {
 		const internalStartDate = DateService.getStartDate(startDate);
@@ -18,7 +18,7 @@ export class FetchDataService {
 				internalStartDate,
 				internalEndDate,
 				RegionService.getFormatedRegionString(value),
-				true
+				'sold'
 			);
 			rows = rows.concat(salesResponse.rows);
 
@@ -29,9 +29,20 @@ export class FetchDataService {
 				internalStartDate,
 				internalEndDate,
 				RegionService.getFormatedRegionString(value),
-				false
+				'active'
 			);
 			rows = rows.concat(inventoryResponse.rows);
+
+			// Too not overload the server not in my control
+			await this.delay(this.delayTime);
+
+			const expiredResponse = await this.fetchData(
+				internalStartDate,
+				internalEndDate,
+				RegionService.getFormatedRegionString(value),
+				'expired'
+			);
+			rows = rows.concat(expiredResponse.rows);
 
 			// Too not overload the server not in my control
 			await this.delay(this.delayTime);
@@ -40,33 +51,43 @@ export class FetchDataService {
 		return rows;
 	}
 
-	async fetchData(startDate, endDate, regions, soldFlag) {
+	async fetchData(startDate, endDate, regions, soldEnum) {
 		let headers = { 'Content-Type': 'application/x-www-form-urlencoded' };
 		let httpResponse = await fetch(querySQL, {
 			method: 'POST',
 			headers: headers,
-			body: this.getParams(startDate, endDate, regions, soldFlag)
+			body: this.getParams(startDate, endDate, regions, soldEnum)
 		});
 
 		return httpResponse.json();
 	}
 
-	getParams(startDate, endDate, regions, soldFlag) {
-		const args = this.getArgs(startDate, endDate, regions, soldFlag);
+	getParams(startDate, endDate, regions, soldEnum) {
+		const args = this.getArgs(startDate, endDate, regions, soldEnum);
 
 		let searchQuery = 'SELECT * FROM *** WHERE ' + args.join(' AND ') + this.orderBy;
 		searchQuery += ' LIMIT ' + this.pageSize + ' OFFSET ' + 0;
 
 		let params = 'sql=' + encodeURIComponent(searchQuery);
-		params += '&sold=' + (soldFlag ? '1' : '');
+		params += '&sold=' + this.getSoldFlag(soldEnum);
 		params += '&s=' + gReceiver_(searchQuery);
 
 		return params;
 	}
 
-	getArgs(startDate, endDate, regions, soldFlag) {
+	getSoldFlag(soldEnum) {
+		if (soldEnum === 'sold') {
+			return '1';
+		} else if (soldEnum === 'expired') {
+			return 'expired';
+		}
+
+		return '';
+	}
+
+	getArgs(startDate, endDate, regions, soldEnum) {
 		let args = [];
-		if (soldFlag) {
+		if (soldEnum === 'sold' || soldEnum === 'expired') {
 			args = args.concat([
 				`entryDate >= ${startDate}`,
 				`entryDate <= ${endDate}`
