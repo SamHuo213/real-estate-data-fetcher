@@ -1,5 +1,3 @@
-
-
 import { DataConverterService } from './data-converter-service';
 
 describe('DataConverterService', () => {
